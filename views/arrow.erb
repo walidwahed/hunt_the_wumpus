@@ -1,0 +1,7 @@
+<p>Your crooked arrows can reach multiple adjacent caves.</p>
+<p>How many caves would you like your arrow to pass through?</p>
+<ul>
+  <% 1.upto(@max_rooms) do |number| %>
+    <a href="/arrow/<%= number %>"><li><%= number %></li></a>
+  <% end %>
+</ul>

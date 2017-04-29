@@ -1,0 +1,9 @@
+<p>You're now in cave <%= @player_location %>.</p>
+<p class="warnings"><%= @nearby_hazards %></p>
+<p>Adjacent caves (click to move):</p>
+<ul>
+  <% @adjacent_rooms.each do |room| %>
+    <a href="/dungeon/<%= room %>"><li><%= room %></li></a>
+  <% end %>
+</ul>
+<p>Or, <a href="/arrow">shoot your bow</a>.</p>

@@ -1,0 +1,26 @@
+<p>Choose the path of your arrow.</p>
+<p>Please select the cave numbers you want your arrow to pass through.</p>
+<p>If the rooms on the arrow path are not connected, the arrow will bounce to one random adjacent room.</p>
+<p>Be careful not to hit yourself!</p>
+<p>You're in cave <%= @player_room %>.</p>
+
+<form method="post" action="/arrow">
+  <% 1.upto(@rooms_to_select) do |room| %>
+    
+    <div>
+      <p class="path">Arrow flight path order - cave #<%= room %>:</p>
+      <% 1.upto(20) do |room_num| %>
+        <div class="radios">
+          <input type="radio" name="target_<%= room %>" value="<%= room_num %>" id="<%= room %>_<%= room_num %>">
+          <label for="<%= room %>_<%= room_num %>"><%= room_num %></label>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+
+  <div>
+    <button type="submit">Shoot!</button>
+  </div>
+
+</form>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hunt the Wumpus</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  </head>
+  <body>
+    <div class="main">
+      <% if session[:message] %>
+        <p class="message"><%= session.delete(:message) %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

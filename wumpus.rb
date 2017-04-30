@@ -23,6 +23,7 @@ get '/enter' do
   session[:player] = Player.new
   session[:game_over] = nil
   session[:message] = nil
+  session[:wumpus_awake] = nil
 
   redirect '/dungeon'
 end
@@ -48,10 +49,11 @@ end
 
 get '/resolve_move' do
   hazard = session[:dungeon].hazard_at_player_location
+  session[:wumpus_awake] = wumpus_wakes? unless ENV["RACK_ENV"] == 'test'
 
   case hazard
   when :wumpus
-    if wumpus_wakes?
+    if session[:wumpus_awake]
       session[:dungeon].wumpus_move
     else
       session[:game_over] = :wumpus
@@ -125,7 +127,8 @@ def wumpus_wakes?
 end
 
 def wumpus_move_after_arrow
-  session[:dungeon].wumpus_move if wumpus_wakes?
+  session[:wumpus_awake] = wumpus_wakes? unless ENV["RACK_ENV"] == 'test'
+  session[:dungeon].wumpus_move if session[:wumpus_awake]
   session[:game_over] = :wumpus_move if
     session[:dungeon].wumpus_location == session[:dungeon].player_location
 end

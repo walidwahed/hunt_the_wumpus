@@ -49,7 +49,7 @@ end
 
 get '/resolve_move' do
   hazard = session[:dungeon].hazard_at_player_location
-  session[:wumpus_awake] = wumpus_wakes? unless ENV["RACK_ENV"] == 'test'
+  session[:wumpus_awake] = wumpus_wakes? unless ENV['RACK_ENV'] == 'test'
 
   case hazard
   when :wumpus
@@ -126,8 +126,12 @@ def wumpus_wakes?
   [0, 0, 0, 1].sample.zero?
 end
 
+def set_wumpus_wakes
+  session[:wumpus_awake] = wumpus_wakes? unless ENV['RACK_ENV'] == 'test'
+end
+
 def wumpus_move_after_arrow
-  session[:wumpus_awake] = wumpus_wakes? unless ENV["RACK_ENV"] == 'test'
+  set_wumpus_wakes
   session[:dungeon].wumpus_move if session[:wumpus_awake]
   session[:game_over] = :wumpus_move if
     session[:dungeon].wumpus_location == session[:dungeon].player_location
